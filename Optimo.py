@@ -84,6 +84,7 @@ def simplex(numVar:int, numDes:int,tipoOpt:str,coeficientesFO:str,coeficientesDe
     for i in range(numVar):
         # Crear un diccionario y agregarlo a la lista
         solucionDic.append({"variable": "x" + str(i+1), "valor": solucion[0][i]})
+    solucionDic.append({"variable":"z","valor":Tabla[0][1+numVar+numDes+1-1]})
 
         #json_data = json.dumps(solucionDic, sort_keys=True, indent=4)
     return solucionDic
