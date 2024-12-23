@@ -34,7 +34,10 @@ def simplex(numVar:int, numDes:int,tipoOpt:str,coeficientesFO:str,coeficientesDe
     TablaVariablesDentro= np.zeros((1,numDes))
     for i in range(numDes):
         TablaVariablesDentro[0][i] = numVar +(i+1)
-    TablaVariablesDentro
+    TablaVariablesFuera= np.zeros((1,numVar))
+    for i in range(numVar):
+        TablaVariablesFuera[0][i] = i+1
+    aux =0
 
     #ALGORITMO
     seguir =True
@@ -57,7 +60,9 @@ def simplex(numVar:int, numDes:int,tipoOpt:str,coeficientesFO:str,coeficientesDe
         for i in range(numDes+1):
             if i != posicionSale: 
                 Tabla[i] = Tabla[i] - Tabla[i][posicionEntra]*filaPivote 
-        TablaVariablesDentro[0][posicionSale]=posicionEntra
+        aux = TablaVariablesDentro[0][posicionSale-1]
+        TablaVariablesDentro[0][posicionSale-1]=TablaVariablesFuera[0][posicionEntra-1]
+        TablaVariablesFuera[0][posicionEntra-1] = aux
         #Verificando que ya no se puede optimizar mas 
         for i in range(1+numVar+numDes+1):
             if Tabla[0][i]<0:
@@ -70,9 +75,8 @@ def simplex(numVar:int, numDes:int,tipoOpt:str,coeficientesFO:str,coeficientesDe
     for i in range(numVar):
         for j in range(numDes):
             if TablaVariablesDentro[0][j] ==i+1:
-                solucion[0][cont]= Tabla[j][(1+1+numVar+numDes)-1]
-                cont+=1
-
+                solucion[0][cont]= Tabla[j+1][(1+1+numVar+numDes)-1]
+        cont+=1
 
     solucionDic = []
 
